@@ -221,6 +221,27 @@
   font-size: 0.9em;
 }
 
+.preview-content .mermaid-block {
+  margin-bottom: 1em;
+  overflow-x: auto;
+  text-align: center;
+}
+
+.preview-content .mermaid-block svg {
+  display: inline-block;
+  height: auto;
+}
+
+.preview-content .mermaid-block[data-mermaid-state="error"] {
+  text-align: left;
+}
+
+.preview-content .mermaid-error {
+  color: var(--destructive);
+  font-size: 0.875em;
+  margin-bottom: 0.5em;
+}
+
 .preview-content :not(pre) > code {
   background-color: var(--muted);
   color: var(--foreground);
