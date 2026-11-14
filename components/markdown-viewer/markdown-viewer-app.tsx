@@ -16,6 +16,7 @@ import {
 import type { MarkdownFileNode } from "@/lib/markdown-files";
 import { renderMarkdownToSafeHtml } from "@/lib/render-markdown";
 import { setDarkTheme, useIsDarkTheme } from "@/lib/use-theme";
+import { useMermaidDiagrams } from "@/lib/use-mermaid-diagrams";
 
 function downloadMarkdownFile(content: string, filename: string) {
   const safeName = filename.toLowerCase().endsWith(".md") ? filename : `${filename}.md`;
@@ -97,9 +98,13 @@ function ToolbarIconButton({
 
 function MarkdownContent({ content }: { content: string }) {
   const html = useMemo(() => renderMarkdownToSafeHtml(content), [content]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDark = useIsDarkTheme();
+  useMermaidDiagrams(containerRef, html, isDark);
 
   return (
     <div
+      ref={containerRef}
       className="preview-content max-w-none"
       dangerouslySetInnerHTML={{ __html: html }}
     />
@@ -131,6 +136,15 @@ function greet(name) {
 }
 
 greet("World");
+\`\`\`
+
+### 다이어그램 예시
+
+\`\`\`mermaid
+flowchart LR
+  A[마크다운 작성] --> B{mermaid 블록?}
+  B -- 예 --> C[SVG 다이어그램]
+  B -- 아니오 --> D[일반 코드 블록]
 \`\`\`
 
 ### 목록
